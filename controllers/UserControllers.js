@@ -14,7 +14,13 @@ const createUser = async (req, res) => {
     if (!event) {
       return res.status(404).json({ error: 'Event not found' });
     }
-
+    const userExists = await Register.findOne({
+      where: { email: req.body.email },
+    });
+ 
+    if (userExists) {
+      throw new Error("User already registered");
+    }
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
