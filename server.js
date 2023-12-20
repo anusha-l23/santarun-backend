@@ -3,10 +3,12 @@ const bodyParser = require('body-parser');
 const userRoutes = require('./routes/User');
 const eventRoutes = require("./routes/Event");
 const couponRoutes = require("./routes/Coupon")
+const path = require('path');
 const cors = require("cors");
 
 const app = express();
 app.use(express.json())
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 const PORT = process.env.PORT || 3001;
 app.use(bodyParser.json());
 app.use(cors())

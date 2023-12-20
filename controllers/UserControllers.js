@@ -4,7 +4,7 @@ const { Op } = require("sequelize");
 const nodemailer = require("nodemailer");
 const acountSid = "ACe79385ef5aff258d5b49a5b139c827c7";
 //const authToken = "c8f035579e8f1a0b7a54ea3425fc0656";
-const authToken = "4318e98c16d5c3136313145a7e8a2c3b";
+const authToken = "2500287e188644ab398eaebe413c705a";
 const client = require("twilio")(acountSid, authToken);
 
 const createUser = async (req, res) => {
@@ -14,13 +14,13 @@ const createUser = async (req, res) => {
     if (!event) {
       return res.status(404).json({ error: 'Event not found' });
     }
-    const userExists = await Register.findOne({
-      where: { email: req.body.email },
-    });
+    // const userExists = await Register.findOne({
+    //   where: { email: req.body.email },
+    // });
  
-    if (userExists) {
-      throw new Error("User already registered");
-    }
+    // if (userExists) {
+    //   throw new Error("User already registered");
+    // }
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -99,8 +99,6 @@ const createUser = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
-
-
 const getAllUsers = async (req, res) => {
   try {
     const users = await Register.findAll();
@@ -125,8 +123,6 @@ const getAllUsersByEventId = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 }
-
-
 
 const getAllUsersByGender = async (req, res) => {
   try {
@@ -204,5 +200,5 @@ module.exports = {
   getAllUsersByGender,
   getAllUsersByTshirtSize,
   getAllUsersFreeRegistration,
-  getAllUsersPaidRegistration
+  getAllUsersPaidRegistration,
 };
