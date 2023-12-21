@@ -5,7 +5,7 @@ const userController = require('../controllers/UserControllers');
 // Routes
 router.post('/register', userController.createUser);
 router.get('/users', userController.getAllUsers);
-router.get('/form-submit', userController.formSubmit);
+router.post('/form-submit', userController.formSubmit);
 router.get('/users/:eventId', userController.getAllUsersByEventId)
 router.get('/gender', userController.getAllUsersByGender);
 router.get('/tshirtsize', userController.getAllUsersByTshirtSize);
