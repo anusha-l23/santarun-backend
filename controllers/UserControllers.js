@@ -1,4 +1,5 @@
 const { Register } = require('../models');
+const {FormSubmission} = require("../models");
 const { Event } = require("../models")
 const { Op } = require("sequelize");
 const nodemailer = require("nodemailer");
@@ -6,6 +7,47 @@ const acountSid = "ACe79385ef5aff258d5b49a5b139c827c7";
 //const authToken = "c8f035579e8f1a0b7a54ea3425fc0656";
 const authToken = "2500287e188644ab398eaebe413c705a";
 const client = require("twilio")(acountSid, authToken);
+
+const formSubmit = async (req, res) => {
+  try {
+
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: 'anusha.lakkakula2022@gmail.com',
+        pass: 'iutvtpzrnkkcfoqd'
+      }
+    });
+
+    const sendMail = (recipientEmail, message) => {
+      const mailOptions = {
+        from: 'santarun2023.rcck@gmail.com',
+        to: recipientEmail,
+        subject: "Form Submission of Novarace",
+        text: message
+      }
+
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.error("Error sending email: ", error)
+        }
+        else {
+          console.log("Email sent: ", info.response)
+        }
+      })
+    };
+
+     const form = await FormSubmission.create(req.body);
+
+    res.status(200).json({message: "Email sent successfully...", form});
+ 
+    const successfulMessage = "Thank you for form submitting, Welcome to Novarace";
+    sendMail(form.email, successfulMessage);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
 
 const createUser = async (req, res) => {
   try {
@@ -196,6 +238,7 @@ const getAllUsersPaidRegistration = async (req, res) => {
 module.exports = {
   createUser,
   getAllUsers,
+  formSubmit,
   getAllUsersByEventId,
   getAllUsersByGender,
   getAllUsersByTshirtSize,

@@ -27,7 +27,6 @@ const storage = multer.diskStorage({
     cb(null, 'uploads/');
   },
   filename: function (req, file, cb) {
-    // Keep the original filename with its extension
     cb(null, file.originalname);
   }
 });
