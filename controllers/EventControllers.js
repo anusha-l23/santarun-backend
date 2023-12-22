@@ -41,13 +41,15 @@ if(err) {
   return res.status(500).json({error: "File upload error"})
 }
 
-    const {eventName, location, year} = req.body;
+    const {eventName, location, year, categoryName, categoryAmount} = req.body;
+    console.log(req.body, req.body);
     const eventPicture = req.file ? req.file.path : null;
     const eventCreate = await CreateEvent.create({
       eventName,
       location,
       year,
-      eventPicture
+      eventPicture,
+      categoryName, categoryAmount
     });
     res.status(200).json({message: "Event created successfully", eventCreate});
   });

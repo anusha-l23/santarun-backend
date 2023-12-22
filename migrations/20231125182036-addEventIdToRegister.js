@@ -7,7 +7,7 @@ module.exports = {
       type: Sequelize.INTEGER,
       allowNull: true, 
       references: {
-        model: 'Events',
+        model: 'CreateEvents',
         key: 'id'
       },
      
