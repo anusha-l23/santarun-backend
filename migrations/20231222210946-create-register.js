@@ -45,6 +45,31 @@ module.exports = {
       acceptedTerms: {
         type: Sequelize.BOOLEAN
       },
+      eventId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'CreateEvents',
+          key: 'id', 
+        },
+      },
+      street: {
+        type: Sequelize.STRING
+      },
+      city: {
+        type: Sequelize.STRING
+      },
+      pincode: {
+        type: Sequelize.STRING
+      },
+      state: {
+        type: Sequelize.STRING
+      },
+      country: {
+        type: Sequelize.STRING
+      },
+      personStatus: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      CreateEvent.hasMany(models.Register, { foreignKey: 'eventId' });
     }
   }
   CreateEvent.init({
@@ -31,6 +31,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'CreateEvent',
+    tableName: 'CreateEvents',
   });
   return CreateEvent;
 };
