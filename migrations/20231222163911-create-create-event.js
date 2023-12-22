@@ -9,6 +9,9 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      categoryDetails: {
+        type: Sequelize.JSON
+      },
       eventName: {
         type: Sequelize.STRING
       },

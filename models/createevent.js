@@ -10,16 +10,24 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      CreateEvent.hasMany(models.Register, { foreignKey: 'eventId' });
+      // define association here
     }
   }
   CreateEvent.init({
+    categoryDetails: {
+      type: DataTypes.JSON, // Using JSON type for category details
+      allowNull: true, // Modify as per your requirements
+      get() {
+        return this.getDataValue('categoryDetails');
+      },
+      set(val) {
+        this.setDataValue('categoryDetails', val);
+      },
+    },
     eventName: DataTypes.STRING,
     location: DataTypes.STRING,
     year: DataTypes.DATE,
-    eventPicture: DataTypes.STRING,
-    categoryName: DataTypes.STRING,
-    categoryAmount: DataTypes.INTEGER,
+    eventPicture: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'CreateEvent',
