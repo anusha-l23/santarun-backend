@@ -40,7 +40,13 @@ try{
     console.log(categoryDetails, "categorydatails");
     console.log(req.body, "req.body")
     const eventPicture = req.file ? req.file.path : null;
-
+    
+    const existingEvent = await CreateEvent.findOne({ where:{
+      eventName: req.body.eventName
+    } });
+    if (existingEvent) {
+      return res.status(400).json({ error: "Event with this name already exists" });
+    }
     const eventCreate = await CreateEvent.create({
       eventName,
       location,
