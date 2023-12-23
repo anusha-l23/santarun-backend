@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-     Register.belongsTo(models.CreateEvent, { foreignKey: 'eventId' });
+  Register.belongsTo(models.CreateEvent, {foreignKey: "eventId"})
     }
   }
   Register.init({
@@ -32,7 +32,8 @@ module.exports = (sequelize, DataTypes) => {
     pincode: DataTypes.STRING,
     state: DataTypes.STRING,
     country: DataTypes.STRING,
-    personStatus: DataTypes.STRING
+    personStatus: DataTypes.STRING,
+    medicalIssue:DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'Register',
