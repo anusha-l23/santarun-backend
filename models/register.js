@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-  Register.belongsTo(models.CreateEvent, {foreignKey: "eventId"})
+      Register.belongsTo(models.EventCreate, {foreignKey: "eventId"})
     }
   }
   Register.init({

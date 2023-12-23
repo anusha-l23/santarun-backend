@@ -3,20 +3,20 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class CreateEvent extends Model {
+  class EventCreate extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      CreateEvent.hasMany(models.Register, { foreignKey: 'eventId' });
+      EventCreate.hasMany(models.Register, { foreignKey: 'eventId' });
     }
   }
-  CreateEvent.init({
+  EventCreate.init({
     categoryDetails: {
-      type: DataTypes.JSON, // Using JSON type for category details
-      allowNull: true, // Modify as per your requirements
+      type: DataTypes.JSON, 
+      allowNull: true,
       get() {
         return this.getDataValue('categoryDetails');
       },
@@ -27,11 +27,16 @@ module.exports = (sequelize, DataTypes) => {
     eventName: DataTypes.STRING,
     location: DataTypes.STRING,
     year: DataTypes.DATE,
-    eventPicture: DataTypes.STRING
+    eventPicture: DataTypes.STRING,
+    aboutEvent: DataTypes.TEXT,
+    orgEmail: DataTypes.STRING,
+    contactNum: DataTypes.STRING,
+    regOpenDate: DataTypes.DATE,
+    regCloseDate: DataTypes.DATE
   }, {
     sequelize,
-    modelName: 'CreateEvent',
-    tableName: 'CreateEvents',
+    modelName: 'EventCreate',
+    tableName: 'EventCreates',
   });
-  return CreateEvent;
+  return EventCreate;
 };

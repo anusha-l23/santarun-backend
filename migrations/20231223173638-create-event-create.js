@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('CreateEvents', {
+    await queryInterface.createTable('EventCreates', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -24,6 +24,21 @@ module.exports = {
       eventPicture: {
         type: Sequelize.STRING
       },
+      aboutEvent: {
+        type: Sequelize.TEXT
+      },
+      orgEmail: {
+        type: Sequelize.STRING
+      },
+      contactNum: {
+        type: Sequelize.STRING
+      },
+      regOpenDate: {
+        type: Sequelize.DATE
+      },
+      regCloseDate: {
+        type: Sequelize.DATE
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -35,6 +50,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('CreateEvents');
+    await queryInterface.dropTable('EventCreates');
   }
 };

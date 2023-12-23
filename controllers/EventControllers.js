@@ -1,5 +1,5 @@
 const {Event} = require("../models");
-const {CreateEvent} = require("../models");
+const {EventCreate} = require("../models");
 const multer = require('multer');
 
 const storage = multer.diskStorage({
@@ -12,7 +12,7 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage });
-const EventCreate = async(req, res) => {
+const CreateEvent = async(req, res) => {
 
   try {
     upload.single("eventPicture")(req, res, async (err)=> {
@@ -21,7 +21,11 @@ if(err) {
   return res.status(500).json({error: "File upload error"})
 }
 try{
-    const {eventName, location, year} = req.body;
+    const {eventName, location, year,aboutEvent,
+      orgEmail,
+      contactNum,
+      regOpenDate,
+      regCloseDate} = req.body;
     const categoryDetails = [];
     Object.keys(req.body).forEach((key) => {
       if (key.startsWith('categoryDetails[')) {
@@ -41,18 +45,23 @@ try{
     console.log(req.body, "req.body")
     const eventPicture = req.file ? req.file.path : null;
     
-    const existingEvent = await CreateEvent.findOne({ where:{
+    const existingEvent = await EventCreate.findOne({ where:{
       eventName: req.body.eventName
     } });
     if (existingEvent) {
       return res.status(400).json({ error: "Event with this name already exists" });
     }
-    const eventCreate = await CreateEvent.create({
+    const eventCreate = await EventCreate.create({
       eventName,
       location,
       year,
       eventPicture,
-      categoryDetails:req.body.categoryDetails
+      categoryDetails:req.body.categoryDetails,
+      aboutEvent,
+      orgEmail,
+      contactNum,
+      regOpenDate,
+      regCloseDate
     });
     res.status(200).json({message: "Event created successfully", eventCreate});
   }
@@ -70,7 +79,7 @@ try{
 
  const getResults = async (req, res)=> {
     try {
-      const events = await CreateEvent.findAll();
+      const events = await EventCreate.findAll();
       res.status(200).json(events);
       console.log("Event Fetched...")
       
@@ -96,7 +105,7 @@ try{
   module.exports = {
     // selectEvent,
     // getAllEvents,
-    EventCreate,
+    CreateEvent,
     getResults,
   };
   
