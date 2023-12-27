@@ -32,7 +32,8 @@ module.exports = (sequelize, DataTypes) => {
     orgEmail: DataTypes.STRING,
     contactNum: DataTypes.STRING,
     regOpenDate: DataTypes.DATE,
-    regCloseDate: DataTypes.DATE
+    regCloseDate: DataTypes.DATE,
+    tag: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'EventCreate',

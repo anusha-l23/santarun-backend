@@ -25,7 +25,7 @@ try{
       orgEmail,
       contactNum,
       regOpenDate,
-      regCloseDate} = req.body;
+      regCloseDate,tag} = req.body;
     const categoryDetails = [];
     Object.keys(req.body).forEach((key) => {
       if (key.startsWith('categoryDetails[')) {
@@ -61,7 +61,8 @@ try{
       orgEmail,
       contactNum,
       regOpenDate,
-      regCloseDate
+      regCloseDate,
+      tag
     });
     res.status(200).json({message: "Event created successfully", eventCreate});
   }
