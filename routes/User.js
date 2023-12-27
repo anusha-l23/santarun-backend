@@ -11,4 +11,5 @@ router.get('/gender', userController.getAllUsersByGender);
 router.get('/tshirtsize', userController.getAllUsersByTshirtSize);
 router.get('/free-users', userController.getAllUsersFreeRegistration);
 router.get('/paid-users', userController.getAllUsersPaidRegistration);
+router.post("/signup", userController.SignupUser);
 module.exports = router;

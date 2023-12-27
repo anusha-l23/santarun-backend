@@ -1,6 +1,8 @@
 const { Register } = require('../models');
 const {FormSubmission} = require("../models");
 const { Event } = require("../models")
+const {Signup} = require("../models")
+const bcrypt = require("bcryptjs");
 const { Op } = require("sequelize");
 const nodemailer = require("nodemailer");
 const acountSid = "ACe79385ef5aff258d5b49a5b139c827c7";
@@ -48,6 +50,75 @@ const formSubmit = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+
+const SignupUser = async(req, res) => {
+  
+  try {
+
+  //   const userExist = await SignupUser.findOne({
+  //     where: {email: req.body.email}
+  //   });
+  
+  // if(userExist){
+  //   throw new Error("User already signed up with this email...")
+  // }
+
+const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: 'anusha.lakkakula2022@gmail.com',
+        pass: 'iutvtpzrnkkcfoqd'
+      }
+    });
+
+    const sendMail = (recipientEmail, message) => {
+      const mailOptions = {
+        from: 'santarun2023.rcck@gmail.com',
+        to: recipientEmail,
+        subject: "Welcome to Novarace",
+        text: message
+      }
+
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.error("Error sending email: ", error)
+        }
+        else {
+          console.log("Email sent: ", info.response)
+        }
+      })
+    };
+
+const {
+firstName,
+lastName,
+email,
+password,
+confirmPassword,
+optCheck,
+} = req.body;
+
+const hashPassword = await bcrypt.hashSync(password, 10);
+console.log(hashPassword, "hash")
+const result = await Signup.create({
+  firstName,
+  lastName,
+  email,
+  password:hashPassword,
+  confirmPassword:hashPassword,
+  optCheck,
+});
+
+res.status(200).json({message: "Email sent successfully...", result});
+ 
+const successfulMessage = "Welcome to Novarace";
+sendMail(result.email, successfulMessage);
+  } catch (error) {
+    console.error(error); 
+    res.status(500).json({message:"Internal server error"})
+  }
+}
+
 
 const createUser = async (req, res) => {
   try {
@@ -244,4 +315,5 @@ module.exports = {
   getAllUsersByTshirtSize,
   getAllUsersFreeRegistration,
   getAllUsersPaidRegistration,
+  SignupUser
 };
